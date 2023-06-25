@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 import java.sql.*;
 
 public class ProductApplication extends Application {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/product_application";
-    private static final String DB_USERNAME = "Baron";
-    private static final String DB_PASSWORD = "alekobatla23";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/[TABLE-NAME]";
+    private static final String DB_USERNAME = "[DB-USERNAME]";
+    private static final String DB_PASSWORD = "[INPUT-PASSWORD]";
 
     private ObservableList<Product> products = FXCollections.observableArrayList();
     private BorderPane root;
