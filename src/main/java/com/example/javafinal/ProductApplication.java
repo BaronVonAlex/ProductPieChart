@@ -5,18 +5,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
+import java.util.stream.Collectors;
+import java.util.Map;
 import java.sql.*;
 
 public class ProductApplication extends Application {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/[TABLE-NAME]";
-    private static final String DB_USERNAME = "[DB-USERNAME]";
-    private static final String DB_PASSWORD = "[INPUT-PASSWORD]";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/product_application";
+    private static final String DB_USERNAME = "Baron";
+    private static final String DB_PASSWORD = "alekobatla23";
 
     private ObservableList<Product> products = FXCollections.observableArrayList();
     private BorderPane root;
@@ -146,15 +147,15 @@ public class ProductApplication extends Application {
     private void updatePieChart() {
         pieChart.getData().clear();
 
-        int totalCount = 0;
+        Map<String, Integer> productQuantities = products.stream()
+                .collect(Collectors.groupingBy(Product::getName, Collectors.summingInt(Product::getQuantity)));
 
-        for (Product product : products) {
-            int quantity = product.getQuantity();
-            totalCount += quantity;
+        int totalCount = productQuantities.values().stream().mapToInt(Integer::intValue).sum();
 
-            PieChart.Data data = new PieChart.Data(product.getName() + " (" + quantity + ")", quantity);
+        productQuantities.forEach((name, quantity) -> {
+            PieChart.Data data = new PieChart.Data(name + " (" + quantity + ")", quantity);
             pieChart.getData().add(data);
-        }
+        });
 
         pieChart.setTitle("Product Quantity (Total: " + totalCount + ")");
     }
