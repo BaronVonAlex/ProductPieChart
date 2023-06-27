@@ -15,7 +15,7 @@ import java.util.Map;
 import java.sql.*;
 
 public class ProductApplication extends Application {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/[TABLE NAME]";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/[DATABASE NAME]";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "";
 
